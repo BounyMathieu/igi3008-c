@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+// comptage
+
 int compte(int t[], int size, int lowest, int highest) {
     int count = 0;
     for (int i = 0; i < size; i++) {
@@ -8,4 +10,41 @@ int compte(int t[], int size, int lowest, int highest) {
         }
     }
     return count;
+}
+
+// si tableau vide
+
+void afficher_deciles(int t[], int size) {
+    if (size == 0) {
+        printf("Le tableau est vide.\n");
+        return;
+    }
+
+    // calculer les déciles en triant tableu
+    // qsort pour trier
+
+    qsort(t, size, sizeof(int), (int(*)(const void*, const void*))compare);
+
+    for (int i = 0; i < 10; i++) {
+        int lowest = (i == 0) ? t[0] : t[(size * i) / 10];
+        int highest = t[(size * (i + 1)) / 10 - 1];
+        int count = compte(t, size, lowest, highest);
+        
+        printf("Décile %d (%d à %d) : %d éléments\n", i + 1, lowest, highest, count);
+    }
+}
+
+// pour que qsort puisse comparer les valeurs 
+
+int compare(const int *a, const int *b) {
+    return (*a > *b) - (*a < *b);
+}
+
+int main() {
+    int t[] = {16,3,50,8,77,85,43,21,100};
+    int size = sizeof(t) / sizeof(t[0]);
+    
+    afficher_deciles(t, size);
+    
+    return 0;
 }
