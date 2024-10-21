@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+om
 // comptage
 
 int compte(int t[], int size, int lowest, int highest) {
